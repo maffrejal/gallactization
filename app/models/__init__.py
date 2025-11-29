@@ -1,7 +1,7 @@
 # Biome / Lifeform models package initializer
 from .user import User
 from .galaxy import Galaxy
-from .system import System
+from .system import StarSystem
 from .planet import Planet
 from .biome import Biome
 from .lifeform import Lifeform

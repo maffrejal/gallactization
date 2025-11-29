@@ -77,6 +77,41 @@ canvas.addEventListener("mousemove", e => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("galaxy-canvas");
+    const ctx = canvas.getContext("2d");
+
+    window.canvas = canvas;  // expose for debugging
+    window.ctx = ctx;
+
+    initMap(canvas, ctx);     // your map init function
+});
+
+canvas.addEventListener("click", (e) => {
+
+    if (!galaxies || galaxies.length === 0) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    for (let g of galaxies) {
+        // compute actual screen position (same as render())
+        const sx = (g.x - camX) * zoom + canvas.width / 2;
+        const sy = (g.y - camY) * zoom + canvas.height / 2;
+
+        const dx = clickX - sx;
+        const dy = clickY - sy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 12) {   // good selection radius
+            console.log("Galaxy clicked:", g.id);
+            window.location.href = `/viewer/galaxy/${g.id}`;
+            return;
+        }
+    }
+});
+
 /********************************************************************
  * 3. RENDER LOOP
  ********************************************************************/
@@ -108,6 +143,22 @@ render();
 /********************************************************************
  * 4. HOVER TOOLTIP
  ********************************************************************/
+ function onClickGalaxy(event) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    for (let g of galaxies) {
+        const dx = mouseX - g.screenX;
+        const dy = mouseY - g.screenY;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+
+        if (dist < 6) {    // click radius threshold
+            window.location.href = `/viewer/galaxy/${g.id}`;
+            return;
+        }
+    }
+}
 function drawHoverTooltip() {
     let nearest = null;
     let nearestDist = 20;
@@ -143,7 +194,5 @@ function drawHoverTooltip() {
     canvas.style.cursor = "pointer";
 
     // Click → open galaxy viewer
-    canvas.onclick = () => {
-        window.location.href = `/viewer/galaxy/${nearest.id}`;
-    };
+
 }

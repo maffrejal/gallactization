@@ -16,7 +16,15 @@
     <h3 style="color:#8be9fd;">📡 Star Systems</h3>
 
     <p style="opacity:0.6">
-        (Auto-generation coming next — will list star systems in this galaxy)
+          {% for s in systems %}
+		  <div class="hud-card" style="padding:10px;">
+			  <h4 style="margin:0; color:#9dceff;">⭐ {{ s.name }}</h4>
+			  <div style="opacity:0.8">
+				  Type: {{ s.star_type }} <br>
+				  Position: ({{ s.position_x }}, {{ s.position_y }})
+			  </div>
+		  </div>
+		  {% endfor %}
     </p>
 
     <hr style="border-color:#334; margin:20px 0;">

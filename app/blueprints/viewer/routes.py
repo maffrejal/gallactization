@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from app.models.galaxy import Galaxy
+from app.services.system_generator import generate_star_systems_for_galaxy
 
 viewer_bp = Blueprint("viewer", __name__, url_prefix="/viewer")
 
@@ -7,6 +8,13 @@ viewer_bp = Blueprint("viewer", __name__, url_prefix="/viewer")
 def galaxy_map():
     return render_template("galaxy_map/index.html")
 @viewer_bp.route("/galaxy/<int:gid>")
+@viewer_bp.route("/galaxy/<int:gid>")
 def galaxy_detail(gid):
-    g = Galaxy.query.get_or_404(gid)
-    return render_template("galaxy_map/detail.html", galaxy=g)
+    galaxy = Galaxy.query.get_or_404(gid)
+
+    # Auto-generate star systems if missing
+    systems = generate_star_systems_for_galaxy(galaxy, n=10)
+
+    return render_template("galaxy_map/galaxy_detail.html",
+                           galaxy=galaxy,
+                           systems=systems)

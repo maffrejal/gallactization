@@ -13,5 +13,5 @@ class Galaxy(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # FIX: this relationship MUST exist
-    systems = db.relationship("System", back_populates="galaxy", lazy=True)
+    systems = db.relationship("StarSystem", back_populates="galaxy", lazy=True)
 
