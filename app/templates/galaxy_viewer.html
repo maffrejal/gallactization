@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hud-card">
+  <h2>Galaxy — {{ galaxy.name }}</h2>
+  <div style="display:flex;gap:18px;flex-wrap:wrap">
+    <div style="flex:2;min-width:260px">
+      <div class="viewer-meta">
+        <strong>Seed:</strong> {{ galaxy.seed }}<br>
+        <strong>Stars:</strong> {{ galaxy.num_stars }}<br>
+        <strong>Meta:</strong><pre>{{ galaxy.meta | tojson(indent=2) }}</pre>
+      </div>
+    </div>
+    <div style="flex:3;min-width:300px">
+      <!-- placeholder for spiral/visualization -->
+      <div style="height:360px;border-radius:8px;background:linear-gradient(180deg,#021428,#071931);display:flex;align-items:center;justify-content:center;color:#9ad6ff">
+        Galaxy visualization placeholder (spiral viewer can be integrated here)
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:12px"><a href="{{ url_for('galaxy.list_galaxies') }}">Back to galaxies</a></p>
+</div>
+{% endblock %}

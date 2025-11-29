@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>Gallactization</title>
+  <link rel='stylesheet' href='{{ url_for('static', filename='theme.css') }}'>
+</head>
+<body>
+  <header class="glass-nav"><div class="brand"><a href="{{ url_for('home') }}" style="color:white;text-decoration:none">🌌 Gallactization</a></div></header>
+  <main class="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flashes">
+          {% for cat,msg in messages %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hud-card">
+  <h2>Your Galaxies</h2>
+  <div class="galaxy-list">
+    {% for g in galaxies %}
+      <div class="galaxy-item">
+        <h3><a href="{{ url_for('galaxy.view_galaxy', gid=g.id) }}">{{ g.name }}</a></h3>
+        <p>Stars: {{ g.num_stars }}</p>
+        <p>Type: {{ g.meta.type if g.meta and g.meta.type else 'unknown' }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

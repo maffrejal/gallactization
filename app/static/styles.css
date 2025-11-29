@@ -1,0 +1,32 @@
+.lifeform-3d {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.silhouette {
+    width: 180px;
+    height: 260px;
+    filter: drop-shadow(0 0 20px #00eaffaa);
+    background: radial-gradient(circle at 50% 35%, #00fff2 0%, #0082ff 35%, #003366 100%);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+/* Different silhouettes per anatomy */
+.silhouette.bilateral {
+    mask-image: url("/static/silhouettes/bipedal.png");
+}
+.silhouette.radial {
+    mask-image: url("/static/silhouettes/radial.png");
+}
+.silhouette.spherical {
+    mask-image: url("/static/silhouettes/sphere.png");
+}
+.silhouette.amorphous {
+    mask-image: url("/static/silhouettes/blob.png");
+}
+.silhouette.crystalline {
+    mask-image: url("/static/silhouettes/crystal.png");
+}

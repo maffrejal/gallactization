@@ -1,0 +1,23 @@
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,Arial,sans-serif;color:#dbeafe;background:#0b1020;min-height:100vh}
+.glass-nav{position:fixed;left:50%;transform:translateX(-50%);top:18px;width:90%;max-width:1100px;display:flex;justify-content:space-between;align-items:center;padding:12px 22px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.06);z-index:50}
+.brand{font-weight:700;color:#fff;text-decoration:none;font-size:18px}
+.main-content{padding:120px 20px 60px}
+.grid-layer{position:fixed;inset:0;z-index:-1;opacity:0.12;background:radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);background-size:60px 60px;animation:move 25s linear infinite}
+@keyframes move{from{background-position:0 0}to{background-position:60px 60px}}
+.animated-card{width:420px;padding:36px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);box-shadow:0 12px 40px rgba(2,6,23,0.6)}
+.tabs{display:flex;gap:10px;margin-bottom:20px}
+.tab{flex:1;padding:12px;border-radius:12px;background:rgba(0,0,0,0.2);color:#cbd5e1;cursor:pointer;text-align:center}
+.tab.active{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.form-group{margin-bottom:12px}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.35);color:#fff}
+.btn-primary{display:inline-block;width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(90deg,#06b6d4,#7c3aed);color:#fff;font-weight:700}
+.hud-card{max-width:1100px;margin:20px auto;padding:20px;border-radius:12px;background:#061028;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+.dashboard-grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+.profile-card{padding:16px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+.stat-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.stat-name{width:64px;color:#a5b4fc;font-weight:700}
+.stat-bar{flex:1;height:12px;border-radius:8px;background:#021227;overflow:hidden;position:relative}
+.stat-fill{height:100%;background:linear-gradient(90deg,#06b6d4,#7c3aed);border-radius:8px;transition:width .6s ease}
+.currencies{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.currency{padding:8px 12px;border-radius:10px;background:#021726;border:1px solid rgba(255,255,255,0.03)}

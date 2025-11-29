@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="hud-card" style="padding:24px;">
+
+    <h1 style="color:#8be9fd; margin-bottom:10px;">
+        🌌 Galaxy: {{ galaxy.name }}
+    </h1>
+
+    <p style="color:#8be9fdc7;">Type: {{ galaxy.type }}</p>
+    <p style="color:#8be9fdc7;">Stars: {{ galaxy.num_stars }}</p>
+    <p style="color:#8be9fdc7;">Seed: {{ galaxy.seed }}</p>
+
+    <hr style="border-color:#334; margin:20px 0;">
+
+    <h3 style="color:#8be9fd;">📡 Star Systems</h3>
+
+    <p style="opacity:0.6">
+        (Auto-generation coming next — will list star systems in this galaxy)
+    </p>
+
+    <hr style="border-color:#334; margin:20px 0;">
+
+    <a href="/viewer/galaxy-map" class="btn-primary">⬅ Back to Galaxy Map</a>
+
+</div>
+
+{% endblock %}

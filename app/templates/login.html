@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="grid-layer"></div>
+<div style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:40px">
+  <div class="animated-card">
+    <div style="text-align:center;margin-bottom:18px">
+      <h1 style="font-size:28px;margin:0">🌌 Gallactization</h1>
+      <p style="margin:6px 0 0;color:#cfe8ff">Conquer the stars. Build your empire.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Auth Tabs">
+      <button id="tab-login" class="tab active" type="button" onclick="switchTab('login')">Login</button>
+      <button id="tab-register" class="tab" type="button" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <div id="loginForm" class="form-content" style="display:block">
+      <form method="POST" action="{{ url_for('auth.do_login') }}">
+        <div class="form-group"><label>Username</label><input name="username" required></div>
+        <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
+        <button class="btn-primary" type="submit">🚀 Start Playing</button>
+      </form>
+    </div>
+
+    <div id="registerForm" class="form-content" style="display:none">
+      <form method="POST" action="{{ url_for('auth.do_register') }}">
+        <div class="form-group"><label>Username</label><input name="username" minlength="3" required></div>
+        <div class="form-group"><label>Password</label><input type="password" name="password" minlength="6" required></div>
+        <button class="btn-primary" type="submit">✨ Create Account</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function switchTab(tab){
+    document.getElementById('tab-login').classList.remove('active');
+    document.getElementById('tab-register').classList.remove('active');
+    document.getElementById('loginForm').style.display='none';
+    document.getElementById('registerForm').style.display='none';
+    if(tab==='login'){
+      document.getElementById('tab-login').classList.add('active');
+      document.getElementById('loginForm').style.display='block';
+    } else {
+      document.getElementById('tab-register').classList.add('active');
+      document.getElementById('registerForm').style.display='block';
+    }
+  }
+</script>
+{% endblock %}
