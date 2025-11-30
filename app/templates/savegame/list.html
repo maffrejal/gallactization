@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Saves for {{ universe.name }}</h2>
+
+{% if saves %}
+<ul>
+  {% for s in saves %}
+    <li>
+      {{ s.name }} — {{ s.created_at }}
+      <a class="btn-primary" href="{{ url_for('savegame.load_game', save_id=s.id) }}">
+        Load
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No saves yet.</p>
+<a class="btn-primary" href="{{ url_for('savegame.new_game', universe_id=universe.id) }}">
+  Create New Save
+</a>
+{% endif %}
+{% endblock %}

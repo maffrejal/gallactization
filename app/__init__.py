@@ -8,6 +8,8 @@ from flask_login import LoginManager
 from app.models import User
 
 from app.blueprints.game import game_bp
+from app.blueprints.universe import universe_bp
+from app.blueprints.savegame import savegame_bp
 
 
 
@@ -29,6 +31,8 @@ def create_app():
     app.register_blueprint(api_bp)
     
     app.register_blueprint(game_bp)
+    app.register_blueprint(universe_bp)
+    app.register_blueprint(savegame_bp)
 
     @app.route('/')
     def home():

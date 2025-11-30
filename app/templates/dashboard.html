@@ -27,22 +27,26 @@
         <a class="btn-primary" href="{{ url_for('dashboard.index') }}">Buildings</a>
         <a class="btn-primary" href="{{ url_for('dashboard.index') }}">Research</a>
 		<a href="/biomes" class="nav-link neon-link">🌿 Biomes & Lifeforms</a>
-		<a class="btn-primary" href="#" onclick="startGame()">▶ Start Playing</a>
+		<a class="btn-primary" href="#" onclick="startGame()">▶ Generate New Universe</a>
       </div>
-	  <h2>Your Galaxies</h2>
+		<h2>Your Universes</h2>
 
-		{% if galaxies %}
-			<ul>
-			{% for g in galaxies %}
-				<li>
-					<a class="neon-link" href="{{ url_for('viewer.galaxy_detail', gid=g.id) }}">
-						{{ g.name }} ({{ g.type }})
-					</a>
-				</li>
-			{% endfor %}
-			</ul>
+		{% if universes|length == 0 %}
+			<p>No universes found. Click "Generate New Universe" to create one.</p>
 		{% else %}
-			<p>No galaxies found. Click "Start Playing" to create your universe.</p>
+			<div class="universe-list">
+				{% for u in universes %}
+					<div class="universe-item">
+						<h3>{{ u.name }}</h3>
+						<p>Created: {{ u.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+
+						<a class="btn-primary"
+						   href="{{ url_for('savegame.list_for_universe', universe_id=u.id) }}">
+						   Choose
+						</a>
+					</div>
+				{% endfor %}
+			</div>
 		{% endif %}
       <h3>Recent Activity</h3>
       <div style="background:#021226;padding:12px;border-radius:8px;color:#cfe8ff">No activity yet.</div>
@@ -51,14 +55,8 @@
 </div>
 <script>
 function startGame() {
-    fetch("/game/start", {
-        method: "POST"
-    })
-    .then(r => {
-        if (r.redirected) {
-            window.location.href = r.url;
-        }
-    });
+    fetch("/game/generate-universe", { method: "POST" })
+        .then(res => window.location.href = res.url);
 }
 </script>
 {% endblock %}

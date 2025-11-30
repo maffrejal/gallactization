@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="hud-card">
+  <h2>🎮 Saves in {{ universe.name }}</h2>
+
+  <div class="save-list">
+    {% for s in saves %}
+      <div class="save-item">
+        <h3>{{ s.name }}</h3>
+        <p>Progress: {{ s.progress }}%</p>
+        <p>Last Played: {{ s.updated_at.strftime('%Y-%m-%d %H:%M') }}</p>
+
+        <a class="btn-primary" href="{{ url_for('game.start_session', save_id=s.id) }}">
+           ▶ Load Game
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <a class="btn-primary" href="{{ url_for('savegame.create_new_save', universe_id=universe.id) }}">
+      ➕ Start New Game
+  </a>
+</div>
+
+{% endblock %}

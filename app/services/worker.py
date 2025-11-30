@@ -10,53 +10,45 @@ POLL_INTERVAL = 2
 
 
 def run_worker():
+    from app import create_app
     app = create_app()
-    app.app_context().push()
 
-    print("🛰  Universe Worker Started")
-    print("🌀 Waiting for jobs...")
+    with app.app_context():
+        print("🛰  Universe Worker Started")
 
-    while True:
-        try:
-            # get next pending job
-            job = JobQueue.query.filter_by(status="queued").order_by(JobQueue.id.asc()).first()
-
-            if not job:
-                time.sleep(POLL_INTERVAL)
-                continue
-
-            print(f"🚀 Starting Job #{job.id} for user {job.user_id}")
-
-            job.status = "running"
-            job.progress = 0
-            job.message = "Universe generation started"
-            db.session.commit()
-
+        while True:
             try:
-                # run universe generator
-                generate_universe(job.user_id, job)
+                job = JobQueue.query.filter_by(status="queued").order_by(JobQueue.id.asc()).first()
 
-                job.status = "done"
-                job.progress = 100
-                job.message = "Universe generation completed!"
+                if not job:
+                    print("🌀 Waiting for jobs...")
+                    time.sleep(2)
+                    continue
+
+                print(f"🚀 Starting Job #{job.id} for user {job.user_id}")
+
+                job.status = "running"
                 db.session.commit()
 
-                print(f"✅ Job #{job.id} completed successfully")
+                # ----- Actual universe generation -----
+                try:
+                    generate_universe(job.user_id, job)
+                    job.status = "done"
+                    job.progress = 100
+                    job.message = "Universe generation complete"
+                    db.session.commit()
+                except Exception as e:
+                    db.session.rollback()
+                    job.status = "error"
+                    job.message = str(e)
+                    db.session.commit()
+                    print(f"❌ Job {job.id} failed: {e}")
+                # --------------------------------------
 
             except Exception as e:
-                job.status = "error"
-                job.message = str(e)
-                job.progress = 0
-                db.session.commit()
-
-                print(f"❌ Job #{job.id} failed:")
-                traceback.print_exc()
-
-        except Exception as worker_err:
-            print("🔥 Worker internal error:")
-            traceback.print_exc()
-
-        time.sleep(POLL_INTERVAL)
+                print(f"💥 Worker crashed: {e}")
+                db.session.rollback()
+                time.sleep(2)
 
 
 if __name__ == "__main__":
