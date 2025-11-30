@@ -1,0 +1,15 @@
+{
+  "galaxies": 200,
+  "systems_per_galaxy": [5, 15],
+  "planets_per_system": [3, 12],
+  "biomes_per_planet": [1, 4],
+  "lifeforms_per_biome": [0, 3],
+  "names": {
+    "galaxy_prefixes": ["Andro", "Verd", "Sagar", "Zeta", "Kepler", "Nova", "Eos", "Astra", "Nexus", "Helio"],
+    "star_types": ["G", "K", "M", "F", "A", "B", "O"],
+    "planet_prefixes": ["Terra", "Xen", "Aur", "Nym", "Vex", "Oro", "Luma", "Qir"],
+    "biome_prefixes": ["Crystal", "Shadow", "Verdant", "Luminous", "Fungal", "Floating"]
+  },
+  "batch_size": 500,
+  "randomize_names": true
+}

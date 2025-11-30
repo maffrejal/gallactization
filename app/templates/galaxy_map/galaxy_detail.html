@@ -1,36 +1,87 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="hud-card" style="max-width:900px;margin:auto;margin-top:25px;">
 
-<div class="hud-card" style="padding:24px;">
+    <h2 class="neon-title">Galaxy: {{ galaxy.name }}</h2>
+    <p class="text-faint">Type: {{ galaxy.type }}</p>
+    <p class="text-faint">Stars: {{ galaxy.num_stars }}</p>
 
-    <h1 style="color:#8be9fd; margin-bottom:10px;">
-        🌌 Galaxy: {{ galaxy.name }}
-    </h1>
+    <div class="divider"></div>
 
-    <p style="color:#8be9fdc7;">Type: {{ galaxy.type }}</p>
-    <p style="color:#8be9fdc7;">Stars: {{ galaxy.num_stars }}</p>
-    <p style="color:#8be9fdc7;">Seed: {{ galaxy.seed }}</p>
+    <h3 class="neon-subtitle">Star Systems</h3>
 
-    <hr style="border-color:#334; margin:20px 0;">
+    {% if systems %}
+        <div class="star-system-grid">
+            {% for s in systems %}
+                <div class="star-system-card">
+                    <h4>{{ s.name }}</h4>
+                    <p>Star Type: {{ s.star_type }}</p>
+                    <p>Pos: ({{ s.position_x }}, {{ s.position_y }})</p>
 
-    <h3 style="color:#8be9fd;">📡 Star Systems</h3>
-
-    <p style="opacity:0.6">
-          {% for s in systems %}
-		  <div class="hud-card" style="padding:10px;">
-			  <h4 style="margin:0; color:#9dceff;">⭐ {{ s.name }}</h4>
-			  <div style="opacity:0.8">
-				  Type: {{ s.star_type }} <br>
-				  Position: ({{ s.position_x }}, {{ s.position_y }})
-			  </div>
-		  </div>
-		  {% endfor %}
-    </p>
-
-    <hr style="border-color:#334; margin:20px 0;">
-
-    <a href="/viewer/galaxy-map" class="btn-primary">⬅ Back to Galaxy Map</a>
-
+                    {% if s.planets %}
+                        <div class="planet-list">
+                            {% for p in s.planets %}
+                                <div class="planet-entry">
+                                    <span class="planet-name">🪐 {{ p.name }}</span>
+                                    <span class="planet-size">
+                                        Size: {{ p.size }}
+                                    </span>
+                                    <a href="/viewer/planet/{{ p.id }}" class="planet-link">View</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No planets found.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No star systems generated yet.</p>
+    {% endif %}
 </div>
+
+<style>
+.star-system-grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap:16px;
+}
+
+.star-system-card {
+    background:#021226;
+    color:#cfe8ff;
+    padding:14px;
+    border-radius:8px;
+    border:1px solid #0ff3;
+}
+
+.planet-list {
+    margin-top:10px;
+    border-top:1px solid #0ff3;
+    padding-top:8px;
+}
+
+.planet-entry {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:6px;
+    font-size:14px;
+}
+
+.planet-name {
+    color:#9ef;
+}
+
+.planet-size {
+    color:#8ca;
+}
+
+.planet-link {
+    color:#0ff;
+    text-decoration:none;
+    font-size:12px;
+}
+</style>
 
 {% endblock %}

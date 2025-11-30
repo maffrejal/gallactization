@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="hud-card">
+    <h2>🛠 Generating Universe…</h2>
+
+    <div id="status-box">
+        <p>Status: <span id="status">{{ job.status }}</span></p>
+        <p>Message: <span id="message">{{ job.meta.message if job.meta else "..." }}</span></p>
+        <p>Progress: <span id="progress">{{ job.progress * 100 if job.progress else 0 }}%</span></p>
+    </div>
+
+    <div id="done-box" style="display:none;">
+        <h3>✅ Universe Ready!</h3>
+        <a class="btn-primary" href="{{ url_for('dashboard.index') }}">Go to Dashboard</a>
+    </div>
+</div>
+
+
+<script>
+    function checkStatus() {
+        fetch("/game/job-status/{{ job.id }}")
+            .then(r => r.json())
+            .then(data => {
+
+                // Update UI
+                document.getElementById("status").textContent = data.status;
+                document.getElementById("message").textContent = data.message || "";
+                document.getElementById("progress").textContent = Math.round((data.progress || 0) * 100) + "%";
+
+                // NEW: Handle both "done" and "completed"
+                if (data.status === "done" || data.status === "completed") {
+                    window.location.href = "{{ url_for('dashboard.index') }}";
+                    return;
+                }
+
+                setTimeout(checkStatus, 1500);
+            })
+            .catch(err => {
+                console.error(err);
+                setTimeout(checkStatus, 2000);
+            });
+    }
+
+    setTimeout(checkStatus, 1500);
+</script>
+
+{% endblock %}

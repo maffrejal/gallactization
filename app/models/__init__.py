@@ -7,6 +7,8 @@ from .biome import Biome
 from .lifeform import Lifeform
 from .planet_biome import PlanetBiome
 
+from .job_queue import JobQueue
+
 __all__ = [
     "User",
     "Galaxy",

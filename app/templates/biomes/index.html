@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-card">
+  <h1>Biomes</h1>
+  <div style="margin:12px 0">
+    <button id="gen-biome" class="btn-primary">Generate & Save Biome</button>
+  </div>
+  <div class="grid-list">
+    {% for b in biomes %}
+      <div class="card small">
+        <h3><a href="{{ url_for('biomes.biome_detail', bid=b.id) }}">{{ b.name }}</a></h3>
+        <div>Type: {{ b.base_type }}</div>
+        <div>Rarity: {{ b.rarity }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+document.getElementById("gen-biome").addEventListener("click", async () => {
+  const r = await fetch("{{ url_for('biomes.biomes_generate') }}", { method: "POST" });
+  if (!r.ok) { alert("Failed"); return; }
+  const d = await r.json();
+  window.location.href = "{{ url_for('biomes.biomes_index') }}";
+});
+</script>
+{% endblock %}

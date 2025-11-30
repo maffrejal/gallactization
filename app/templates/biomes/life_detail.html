@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-card">
+  <h1>{{ lifeform.name }}</h1>
+  <div>Domain: {{ lifeform.domain }}</div>
+  <div>Complexity: {{ lifeform.complexity }}</div>
+  <h3>Meta</h3>
+  <pre>{{ lifeform.meta | tojson(indent=2) }}</pre>
+</div>
+{% endblock %}

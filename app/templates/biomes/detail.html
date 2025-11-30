@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-card">
+  <h1>{{ biome.name }}</h1>
+  <div>Type: {{ biome.base_type }}</div>
+  <div>Rarity: {{ biome.rarity }}</div>
+  <h3>Meta</h3>
+  <pre>{{ biome.meta | tojson(indent=2) }}</pre>
+
+  <h3>Lifeforms</h3>
+  {% if lifeforms %}
+    <ul>
+    {% for l in lifeforms %}
+      <li><a href="{{ url_for('lifeforms.life_detail', lid=l.id) }}">{{ l.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No lifeforms assigned (generate them during new game creation or separately).</p>
+  {% endif %}
+</div>
+{% endblock %}
